@@ -13,6 +13,7 @@ library(fs)
 library(janitor)
 library(lubridate)
 library(ggthemes)
+library(knitr)
 library(scales)
 library(tidyverse)
 
@@ -49,11 +50,10 @@ I plan on running multiple analyses of the data, trying to see the relation betw
 ### Graph
 
 ```{r graph}
-
-
 # Calculate data for graph showing reported cases per year
 chicago %>%
-  
+  select(date) %>% 
+
   # Only use year of date
   mutate(year = year(date)) %>% 
   
@@ -67,7 +67,7 @@ chicago %>%
   # Graph cases
   ggplot(aes(x = year, y = cases)) +
   geom_line() +
-  theme_wsj() +
+  theme_calc() +
   labs(title = "Number of Reported Cases",
        subtitle = "In Chicago, IL from 2001 to 2018",
        caption = "Source: data.cityofchicago.org") +
@@ -80,4 +80,4 @@ chicago %>%
 
 ```
 
-This graph shows reported crime over time and it can be seen that reported crime significantly goes down as time went on since 2001. Perhaps I could next see how arrests are affected? 
+This graph shows reported crime over time and it can be seen that reported crime significantly goes down as time went on since 2001. Perhaps I could next see how arrests are affected?
