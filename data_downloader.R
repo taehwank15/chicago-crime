@@ -21,13 +21,18 @@ download.file("https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?acces
 
 chicago_edit <- fread(file = "chicago.csv" , sep = ",")
 
+file_delete("chicago.csv")
+
 chicago_edit <- chicago_edit %>% 
   clean_names() %>% 
-  select(id, date, block, primary_type, description, location_description,
-         arrest, domestic, beat, district, ward, community_area, 
+  select(id, date, primary_type, description, location_description,
+         arrest, domestic, community_area, 
          year, latitude, longitude) %>% 
   filter(year >= 2008) %>% 
   filter(year <= 2018)
   
 write_csv(chicago_edit, "chicago_edit.csv") 
+
+
+
 
