@@ -1,17 +1,6 @@
-# Load in libraries
-
-library(fs)
-library(janitor)
-library(lubridate)
-library(ggthemes)
-library(knitr)
-library(scales)
-library(data.table)
-library(tidyverse)
-
 # Unzip compressed chicago file that has been edited to only have necessary cols
 
-unzip("chicago_edit.csv.zip")
+unzip("data/chicago_edit.csv.zip")
 
 # Read edited version of csv
 
@@ -30,31 +19,31 @@ c1 <- chicago %>%
 
 # Calculate data for graph showing reported cases per year
 
-chicago %>%
-  select(year) %>%
-  
-  # Because 2019 is not finished, graph would be misleading if included
-  
-  filter(year < 2019) %>%
-  
-  # Calculate number of cases per year
-
-  group_by(year) %>%
-  summarize(cases = n()) %>%
-  ungroup() %>%
-  
-
-
-  # Graph cases
-
-  ggplot(aes(x = year, y = cases)) +
-    geom_line() +
-    theme_calc() +
-    labs(title = "Number of Reported Cases",
-    subtitle = "In Chicago, IL from 2001 to 2018",
-    caption = "Source: data.cityofchicago.org") +
-    xlab("Year") +
-    ylab("Number of Reported Cases") +
-    scale_y_continuous(labels = comma) +
-    scale_x_continuous(breaks = c(2001, 2005, 2010, 2015, 2018),
-    labels = c("2001", "2005","2010", "2015", "2018"))
+# chicago %>%
+#   select(year) %>%
+#   
+#   # Because 2019 is not finished, graph would be misleading if included
+#   
+#   filter(year < 2019) %>%
+#   
+#   # Calculate number of cases per year
+# 
+#   group_by(year) %>%
+#   summarize(cases = n()) %>%
+#   ungroup() %>%
+#   
+# 
+# 
+#   # Graph cases
+# 
+#   ggplot(aes(x = year, y = cases)) +
+#     geom_line() +
+#     theme_calc() +
+#     labs(title = "Number of Reported Cases",
+#     subtitle = "In Chicago, IL from 2001 to 2018",
+#     caption = "Source: data.cityofchicago.org") +
+#     xlab("Year") +
+#     ylab("Number of Reported Cases") +
+#     scale_y_continuous(labels = comma) +
+#     scale_x_continuous(breaks = c(2001, 2005, 2010, 2015, 2018),
+#     labels = c("2001", "2005","2010", "2015", "2018"))

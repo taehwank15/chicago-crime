@@ -7,8 +7,17 @@
 #    http://shiny.rstudio.com/
 #
 
+library(fs)
+library(janitor)
+library(lubridate)
+library(ggthemes)
+library(knitr)
+library(scales)
+library(data.table)
 library(shiny)
-#source("data/date_graph.R")
+library(tidyverse)
+
+source("data/date_graph.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
