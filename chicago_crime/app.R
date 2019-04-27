@@ -7,6 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
+
 library(fs)
 library(janitor)
 library(lubridate)
@@ -18,29 +19,54 @@ library(shiny)
 library(tidyverse)
 
 source("data/date_graph.R")
+source("data/maps.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
    
    # Application title
-   titlePanel("Reported Crime in Chicago Over Time"),
-   
-   # Sidebar with a slider input for number of bins 
-   sidebarLayout(
-      sidebarPanel(
-         sliderInput("years",
-                     "Year Range",
-                     min = 2008,
-                     max = 2018,
-                     value = c(2008,2018))
+   navbarPage("Crime in Chicago",
+     tabPanel("Plot",
+     # Sidebar with a slider input for number of bins 
+       sidebarLayout(
+          sidebarPanel(
+             sliderInput("years",
+                         "Year Range",
+                         min = 2008,
+                         max = 2018,
+                         value = c(2008,2018),
+                         sep = "")
+          ),
+          
+          # Show a plot of the generated distribution
+          mainPanel(
+             plotOutput("yearGraph")
+          )
+        )
       ),
-      
-      # Show a plot of the generated distribution
-      mainPanel(
-         plotOutput("yearGraph")
-      )
-   )
-)
+     tabPanel("Map",
+              sidebarLayout(
+                sidebarPanel(
+                  checkboxInput("arrest",
+                                "Show Only Arrested?",
+                                value = FALSE)
+                ),
+              mainPanel(
+                plotOutput("map")
+              )
+              )),
+      navbarMenu("About:",
+      tabPanel("Project",
+               p("This project seeks to analyze patterns in reported cases of Chicago Crime over time.")),
+      tabPanel("Data",
+               p("The data for this project was downloaded form the Chicago Data Portal, available ", 
+                 tags$a("here", href = "https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present/ijzp-q8t2")),
+               p("This data extracts the decade from 2008 to 2018 and samples 900,000 data points out of the over 3.2 million.")),
+      tabPanel("Author",
+               p("I am a student at Harvard College studying Social Studies and Computer Science."),
+               p("The repository for my project can be found ", 
+                 tags$a("here", href = "https://github.com/taehwank15/chicago-crime"))
+  ))))
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -65,6 +91,17 @@ server <- function(input, output) {
           xlab("Year") +
           ylab("Number of Reported Cases") +
           scale_y_continuous(labels = comma)
+   })
+   
+   output$map <- renderPlot({
+    # shooting_locations %>% 
+    #    if (input$arrest == TRUE){
+    #    filter(arrest == TRUE)
+    #    }
+     
+     ggplot() +
+       geom_sf(data = shapes) +
+       geom_sf(data = shooting_locations)
    })
 }
 

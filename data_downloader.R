@@ -13,15 +13,15 @@ library(tidyverse)
 
 # Read csv into environment and delete from folder
 
-download.file("https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD",
-              destfile = "chicago.csv",
-              mode = "wb")
+# download.file("https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD",
+#               destfile = "chicago.csv",
+#               mode = "wb")
 
 # Write edited version of csv with only relevant data
 
 chicago_edit <- fread(file = "chicago.csv" , sep = ",")
 
-file_delete("chicago.csv")
+# file_delete("chicago.csv")
 
 chicago_edit <- chicago_edit %>% 
   clean_names() %>% 
@@ -29,9 +29,13 @@ chicago_edit <- chicago_edit %>%
          arrest, domestic, community_area, 
          year, latitude, longitude) %>% 
   filter(year >= 2008) %>% 
-  filter(year <= 2018)
-  
-write_csv(chicago_edit, "chicago_edit.csv") 
+  filter(year <= 2018) %>% 
+  sample_n(900000)
+
+chicago_edit$date <- as.POSIXct(chicago_edit$date, format = "%m/%d/%Y %I:%M:%S %p")
+
+write_rds(chicago_edit, "chicago_edit.rds") 
+
 
 
 

@@ -1,12 +1,17 @@
 # Unzip compressed chicago file that has been edited to only have necessary cols
 
-unzip("data/chicago_edit.csv.zip")
+# unzip("data/chicago_edit.csv.zip")
+
+# setwd(dir = "chicago_crime/data/")
 
 # Read edited version of csv
+# chicago <- fread('unzip -p data/chicago_edit.csv.zip', sep = ",")
 
-chicago <- fread(file = "chicago_edit.csv" , sep = ",")
+ chicago <- readr::read_rds(path = "data/chicago_edit.rds")
+
+# chicago <- fread(file = "chicago_crime/data/chicago_edit.rds")
   
-file_delete("chicago_edit.csv")
+# file_delete("chicago_edit.csv")
 
 # Change date from char to POSIXct
 
