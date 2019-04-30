@@ -95,7 +95,9 @@ ui <- fluidPage(# Application title
         ),
         h3("Overall Findings"),
         p("It seems that ther has been a constant decrease in the number of reported cases of crime."),
-        p("Another interesting thing to note is that much of arrests come from the West and Southern sides of Chicago. This is consistent with commonly-held beliefs in Chicago that the Western and Southern neighborhoods are often comparatively more dangerous")
+        p("Another interesting thing to note is that much of arrests come from the West and Southern sides of Chicago. 
+          This is consistent with commonly-held beliefs in Chicago that the Western and Southern neighborhoods are 
+          often comparatively more dangerous than the Northern area.")
       ),
       tabPanel(
         "Data",
