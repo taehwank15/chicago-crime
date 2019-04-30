@@ -7,7 +7,8 @@
 # Read edited version of csv
 # chicago <- fread('unzip -p data/chicago_edit.csv.zip', sep = ",")
 
- chicago <- readr::read_rds(path = "data/chicago_edit.rds")
+ chicago <- readr::read_rds(path = "data/chicago_edit.rds") %>% 
+   filter(floor(longitude) != -92)
 
 # chicago <- fread(file = "chicago_crime/data/chicago_edit.rds")
   
@@ -15,7 +16,11 @@
 
 # Change date from char to POSIXct
 
-chicago$date <- as.POSIXct(chicago$date, format = "%m/%d/%Y %I:%M:%S %p")
+chicago$date <- as.POSIXct(chicago$date, format = "%m/%d/%Y %I:%M:%S %p") 
+
+chicago %>% 
+  group_by(floor(longitude)) %>% 
+  count()
 
 # sample
 
@@ -52,3 +57,9 @@ c1 <- chicago %>%
 #     scale_y_continuous(labels = comma) +
 #     scale_x_continuous(breaks = c(2001, 2005, 2010, 2015, 2018),
 #     labels = c("2001", "2005","2010", "2015", "2018"))
+
+c1 %>% 
+ggplot(aes(x = fct_infreq(primary_type))) +
+  geom_bar()
+
+  
