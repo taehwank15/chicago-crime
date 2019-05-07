@@ -6,6 +6,15 @@
 #
 #    http://shiny.rstudio.com/
 #
+# TO DO
+# Reactive/lazy
+# More analysis into days -- see why there's a bump on 1st day of month (April Fools?)
+# Text to explain findings, guide people; different texts per output image possibly
+# Upload image of pop. density map?
+# Fluid page
+# Facet by crime type?
+# Text label of map community areas 
+# Visualization to show most dangerous areas
 
 # Load in libraries
 
