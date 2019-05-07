@@ -286,17 +286,16 @@ server <- function(input, output) {
     filtered_locations <- shooting_locations %>%
       filter(arrest %in% input$arrest)
     
-    ggplot(data = shapes) +
-      theme_map() +
+    # Graphs locations
+    
+    p +
+      geom_sf(data = filtered_locations, aes(alpha = 0.45)) +
       
-      # I made this fill because it allowed me to see the distribution
-      # more specifically. Problem is these divisions on the map is not
-      # very intuitive or practical; it's just a census tool that no one
-      # really knows about. I should try to find divisions by community
+      # Disable Legend for alpha value
+      scale_alpha(guide = "none") +
       
-      geom_sf(aes(fill = NAMELSAD10)) +
-      geom_sf(data = filtered_locations) +
-      theme(legend.position = "none")
+      labs(title = "Locations of Crimes in Chicago",
+           subtitle = "2008 - 2018")
     
   })
   
