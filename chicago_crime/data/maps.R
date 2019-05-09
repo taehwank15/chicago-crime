@@ -44,6 +44,7 @@ p <- ggplot(data = community_areas) +
 shooting_locations <- chicago %>% 
   filter(!is.na(latitude)) %>% 
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326) %>% 
-  sample_n(2000)
+  sample_n(7000)
+
 
 

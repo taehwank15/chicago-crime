@@ -4,7 +4,8 @@ chicago <- readr::read_rds(path = "data/chicago_edit.rds") %>%
   
   # Removes outliers in map location
 
-  filter(floor(longitude) != -92)
+  filter(floor(longitude) != -92) %>% 
+  filter(!is.na(date))
 
 # Change date from char to POSIXct
 
